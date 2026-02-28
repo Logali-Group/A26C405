@@ -9,20 +9,7 @@
                 class="sapUiResponsiveMargin"
                 width="auto"
                 items="{
-                    path: 'invoices>/Invoices',
-                    filters: [
-                        {
-                            path: 'ExtendedPrice',
-                            operator: 'BT',
-                            value1: '0.00',
-                            value2: '50.00'
-                        },
-                        {
-                            path: 'Quantity',
-                            operator: 'EQ',
-                            value1: '4'
-                        }
-                    ],
+                    path: 'northwind>/Invoices',
                     sorter: {
                         path: 'ShipperName',
                         group: true
@@ -56,10 +43,10 @@
             <items>
 
                 <ObjectListItem
-                                title="{invoices>Quantity} x {invoices>ProductName}"
+                                title="{northwind>Quantity} x {northwind>ProductName}"
                                 number="{
                                     parts:[
-                                        'invoices>ExtendedPrice',
+                                        'northwind>ExtendedPrice',
                                         'currency>/myCurrency'
                                     ],
                                     type: 'sap.ui.model.type.Currency',
@@ -69,12 +56,12 @@
                                 }"
                                 numberUnit="{currency>/myCurrency}"
                                 numberState="{=
-                                    ( ${invoices>ExtendedPrice} >= 00.00 &amp;&amp; ${invoices>ExtendedPrice} &lt;= 9.99 )? 'Error' : 
-                                    ( ${invoices>ExtendedPrice} >= 10.00 &amp;&amp; ${invoices>ExtendedPrice} &lt;= 19.99 )? 'Warning' :
-                                    ( ${invoices>ExtendedPrice} >= 20.00 &amp;&amp; ${invoices>ExtendedPrice} &lt;= 39.99 )? 'Success' : 'Information'
+                                    ( ${northwind>ExtendedPrice} >= 00.00 &amp;&amp; ${northwind>ExtendedPrice} &lt;= 9.99 )? 'Error' : 
+                                    ( ${northwind>ExtendedPrice} >= 10.00 &amp;&amp; ${northwind>ExtendedPrice} &lt;= 19.99 )? 'Warning' :
+                                    ( ${northwind>ExtendedPrice} >= 20.00 &amp;&amp; ${northwind>ExtendedPrice} &lt;= 39.99 )? 'Success' : 'Information'
                                 }">
                     
-                    <firstStatus>
+                    <!-- <firstStatus>
 
                         <ObjectStatus 
                         core:require="{
@@ -85,7 +72,7 @@
                                 formatter: 'MyFormatter.statusText.bind($controller)'
                         }" />
                     
-                    </firstStatus>
+                    </firstStatus> -->
 
                 </ObjectListItem>
             
