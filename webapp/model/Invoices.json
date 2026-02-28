@@ -50,5 +50,23 @@
           "Key":"2",
           "Text":"AAA"
       }
+  ],
+  "Status": [
+    {
+      "key":"00",
+      "descr":"None"
+    },
+    {
+      "key":"A",
+      "descr":"New"
+    },
+    {
+      "key":"B",
+      "descr":"In Progress"
+    },
+    {
+      "key":"C",
+      "descr":"Done"
+    }
   ]
 }

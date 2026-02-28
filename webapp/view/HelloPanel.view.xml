@@ -1,7 +1,8 @@
 <mvc:View
             controllerName="com.logaligroup.invoices.controller.HelloPanel"
             xmlns="sap.m"
-            xmlns:mvc="sap.ui.core.mvc">
+            xmlns:mvc="sap.ui.core.mvc"
+            xmlns:core="sap.ui.core">
 
         <Panel headerText="{i18n>helloPanel}"
                 class="sapUiResponsiveMargin"
@@ -29,5 +30,8 @@
         
         </Panel>
 
+        <core:Fragment
+                        fragmentName="com.logaligroup.invoices.fragment.Form01"
+                        type="XML"/>
 
 </mvc:View>

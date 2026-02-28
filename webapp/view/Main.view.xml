@@ -13,8 +13,9 @@
                                 viewName="com.logaligroup.invoices.view.HelloPanel"
                                 type="XML"/>
 
-                <core:Fragment
-                                fragmentName="com.logaligroup.invoices.fragment.Form01"
+
+                <mvc:XMLView  id="invoicesList"
+                                viewName="com.logaligroup.invoices.view.InvoicesList"
                                 type="XML"/>
 
             </content>
