@@ -6,6 +6,10 @@ import SearchField, { SearchField$SearchEvent } from "sap/m/SearchField";
 import List from "sap/m/List";
 import ListBinding from "sap/ui/model/ListBinding";
 import ComboBox, { ComboBox$ChangeEvent } from "sap/m/ComboBox";
+import UIComponent from "sap/ui/core/UIComponent";
+import Event from "sap/ui/base/Event";
+import ObjectListItem from "sap/m/ObjectListItem";
+import Context from "sap/ui/model/Context";
 
 /**
  * @namespace com.logaligroup.invoices.controller
@@ -88,5 +92,19 @@ export default class InvoicesList extends Controller {
     //     const binding = oList.getBinding("items") as ListBinding;
     //     binding.filter(aFilters);
     // }
+
+
+    public onNavToDetail (event : Event) : void {
+        const item = event.getSource() as ObjectListItem;
+        const context = item.getBindingContext("northwind") as Context;
+        const sPath = window.encodeURIComponent(context.getPath());
+        const router = (this.getOwnerComponent() as UIComponent).getRouter();
+
+        router.navTo("RouteDetails",{
+            path: sPath,
+            model: 'northwind'
+        });
+
+    }
 
 }

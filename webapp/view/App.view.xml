@@ -4,7 +4,9 @@
             xmlns:mvc="sap.ui.core.mvc">
 
     <Shell id="shell">
-        <App id="app"/>
+        <App id="app-container">
+            <pages></pages>
+        </App>
     </Shell>
 
 </mvc:View>

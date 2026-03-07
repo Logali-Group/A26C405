@@ -80,13 +80,12 @@
       "config": {
         "routerClass": "sap.m.routing.Router",
         "controlAggregation": "pages",
-        "controlId": "app",
+        "controlId": "app-container",
         "transition": "slide",
         "type": "View",
         "viewType": "XML",
         "path": "com.logaligroup.invoices.view",
-        "async": true,
-        "viewPath": "com.logaligroup.invoices.view"
+        "async": true
       },
       "routes": [
         {
@@ -95,12 +94,19 @@
           "target": [
             "TargetMain"
           ]
+        },
+        {
+          "name": "RouteDetails",
+          "pattern": "detail/{path}",
+          "target":"TargetDetail"
         }
       ],
       "targets": {
         "TargetMain": {
-          "id": "Main",
           "name": "Main"
+        },
+        "TargetDetail": {
+          "name": "Detail"
         }
       }
     },
