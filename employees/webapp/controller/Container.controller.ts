@@ -1,9 +1,9 @@
-import Controller from "sap/ui/core/mvc/Controller";
+import BaseController from "./BaseController";
 
 /**
  * @namespace employees.controller
  */
-export default class Container extends Controller {
+export default class Container extends BaseController {
 
     public onInit(): void {
 

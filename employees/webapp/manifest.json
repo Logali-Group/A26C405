@@ -29,11 +29,11 @@
     "deviceTypes": {
       "desktop": true,
       "tablet": true,
-      "phone": true
+      "phone": false
     }
   },
   "sap.ui5": {
-    "flexEnabled": true,
+    "flexEnabled": false,
     "dependencies": {
       "minUI5Version": "1.145.0",
       "libs": {
