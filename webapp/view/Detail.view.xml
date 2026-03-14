@@ -25,7 +25,8 @@
         </ObjectHeader>
 
         <pr:ProductRating id="productRating"
-                            class="sapUiSmallMarginBeginEnd"/>
+                            class="sapUiSmallMarginBeginEnd"
+                            change="onRatingChange"/>
     
     </Page>
 

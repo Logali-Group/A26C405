@@ -3,6 +3,10 @@ import View from "sap/ui/core/mvc/View";
 import { Route$PatternMatchedEvent } from "sap/ui/core/routing/Route";
 import UIComponent from "sap/ui/core/UIComponent";
 import History from "sap/ui/core/routing/History";
+import ProductRating, { ProductRating$ChangeEvent } from "../control/ProductRating";
+import ResourceModel from "sap/ui/model/resource/ResourceModel";
+import ResourceBundle from "sap/base/i18n/ResourceBundle";
+import MessageToast from "sap/m/MessageToast";
 
 /**
  * @namespace com.logaligroup.invoices
@@ -18,6 +22,10 @@ export default class Detail extends Controller {
     }
 
     private _bindElement (event : Route$PatternMatchedEvent) : void {
+
+        //Reset
+        (this.byId("productRating") as ProductRating).reset();
+
         const args = event.getParameter("arguments") as any;
         const path = args.path as string;
         const view = this.getView() as View;
@@ -41,5 +49,14 @@ export default class Detail extends Controller {
             router.navTo("RouteMain");
         }
     }
+
+    public onRatingChange (event : ProductRating$ChangeEvent) : void {
+        const iValue = event.getParameter("value") as number;
+        let resourceModel = this.getOwnerComponent()?.getModel("i18n") as ResourceModel;
+        let resourceBundle = resourceModel.getResourceBundle() as ResourceBundle;
+        MessageToast.show(resourceBundle.getText("ratingConfirmation",[iValue]) || '');
+    }
+
+
 
 }
