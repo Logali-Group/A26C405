@@ -69,22 +69,37 @@
         "type": "View",
         "viewType": "XML",
         "path": "employees.view",
-        "async": true,
-        "viewPath": "employees.view"
+        "async": true
       },
       "routes": [
         {
-          "name": "RouteContainer",
+          "name": "RouteMaster",
           "pattern": ":?query:",
           "target": [
-            "TargetContainer"
+            "TargetMaster"
           ]
+        },
+        {
+          "name":"RouteDetails",
+          "pattern": "Employee/{index}:?query:",
+          "target": ["TargetMaster","TargetDetails"]
         }
       ],
       "targets": {
         "TargetContainer": {
-          "id": "Container",
           "name": "Container"
+        },
+        "TargetMaster": {
+          "parent": "TargetContainer",
+          "controlId": "fcl-container",
+          "controlAggregation": "beginColumnPages",
+          "name": "Master"
+        },
+        "TargetDetails": {
+          "parent": "TargetContainer",
+          "controlId": "fcl-container",
+          "controlAggregation": "midColumnPages",
+          "name": "Details"
         }
       }
     },

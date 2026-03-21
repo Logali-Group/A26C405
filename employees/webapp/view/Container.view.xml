@@ -3,72 +3,7 @@
             xmlns:f="sap.f"
             xmlns:mvc="sap.ui.core.mvc">
 
-    <f:DynamicPage>
-    
-        <f:title>
-            <f:DynamicPageTitle>
-                <f:heading>
-                    <Title text="{i18n>appTitle}"/>
-                </f:heading>
-                					<f:breadcrumbs>
-						<Breadcrumbs>
-							<Link text="Home" />
-							<Link text="Page 1" />
-							<Link text="Page 2" />
-							<Link text="Page 3" />
-							<Link text="Page 4" />
-							<Link text="Page 5" />
-						</Breadcrumbs>
-					</f:breadcrumbs>            </f:DynamicPageTitle>
-        </f:title>
-
-
-        <f:header>
-
-        </f:header>
-
-
-        <f:content>
-
-            <Table
-                    id="table"
-                    items="{employees>/Employees}"
-                    growing="true">
-
-                <columns>
-                    <Column>
-                        <Label text="{i18n>ID}"/>
-                    </Column>
-                    <Column>
-                        <Label text="{i18n>fullName}"/>
-                    </Column>
-                    <Column>
-                        <Label text="{i18n>country}"/>
-                    </Column>
-                    <Column>
-                        <Label text="{i18n>city}"/>
-                    </Column>
-                    <Column>
-                        <Label text="{i18n>postalCode}"/>
-                    </Column>
-                </columns>
-
-                <items>
-                    <ColumnListItem>
-                        <cells>
-                            <Text text="{employees>EmployeeID}"/>
-                            <Text text="{employees>LastName}, {employees>FirstName}"/>
-                            <Text text="{employees>Country}"/>
-                            <Text text="{employees>City}"/>
-                            <Text text="{employees>PostalCode}"/>
-                        </cells>
-                    </ColumnListItem>
-                </items>
-
-            </Table>
-
-        </f:content>
-    
-    </f:DynamicPage>
+    <f:FlexibleColumnLayout id="fcl-container"
+                        layout="{view>/myLayout}"/>
 
 </mvc:View>

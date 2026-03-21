@@ -1,0 +1,10 @@
+<mvc:View   
+        controllerName="employees.controller.Details"
+        xmlns="sap.m"
+        xmlns:mvc="sap.ui.core.mvc">
+
+        <Page>
+            <Text text="{employees>FirstName} {employees>LastName}"></Text>
+        </Page>
+
+</mvc:View>
