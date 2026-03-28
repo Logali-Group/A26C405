@@ -8,7 +8,7 @@ export default class App extends BaseController {
 
     public onInit(): void {
         this.viewModel();
-        this.loadEmployees();
+        //this.loadEmployees();
         this.loadCountries();
     }
 

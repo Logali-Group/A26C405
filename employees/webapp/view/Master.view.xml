@@ -67,7 +67,7 @@
 
             <Table
                     id="table"
-                    items="{employees>/Employees}"
+                    items="{northwind>/Employees}"
                     growing="true">
 
                 <columns>
@@ -102,11 +102,11 @@
                                 type="Navigation"
                                 press="onNavToDetails">
                         <cells>
-                            <Text text="{employees>EmployeeID}"/>
-                            <Text text="{employees>LastName}, {employees>FirstName}"/>
-                            <Text text="{employees>Country}"/>
-                            <Text text="{employees>City}"/>
-                            <Text text="{employees>PostalCode}"/>
+                            <Text text="{northwind>EmployeeID}"/>
+                            <Text text="{northwind>LastName}, {northwind>FirstName}"/>
+                            <Text text="{northwind>Country}"/>
+                            <Text text="{northwind>City}"/>
+                            <Text text="{northwind>PostalCode}"/>
                         </cells>
                     </ColumnListItem>
                 </items>

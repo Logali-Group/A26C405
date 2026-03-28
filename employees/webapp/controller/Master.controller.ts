@@ -70,7 +70,7 @@ export default class Master extends BaseController {
 
     public onNavToDetails (event : Event) : void {
         const item = event.getSource() as ObjectListItem;
-        const context = item.getBindingContext("employees") as Context;
+        const context = item.getBindingContext("northwind") as Context;
         const sEmployeeID = context.getProperty("EmployeeID");
         const router = this.getRouter();
         const viewModel = this.getView()?.getModel("view") as JSONModel;
@@ -78,7 +78,7 @@ export default class Master extends BaseController {
         console.log(context.getPath());
 
         router.navTo("RouteDetails", {
-            index: parseInt(sEmployeeID) - 1
+            ID: sEmployeeID
         });
     }
 

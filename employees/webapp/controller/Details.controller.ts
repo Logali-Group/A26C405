@@ -1,6 +1,8 @@
 import { Route$PatternMatchedEvent } from "sap/ui/core/routing/Route";
 import BaseController from "./BaseController";
 import View from "sap/ui/core/mvc/View";
+import JSONModel from "sap/ui/model/json/JSONModel";
+import Panel from "sap/m/Panel";
 
 /**
  * @namespace employees.controller
@@ -8,6 +10,13 @@ import View from "sap/ui/core/mvc/View";
 
 
 export default class Details extends BaseController {
+
+    panel: Panel;
+
+    private formModel () : void {
+        const model = new JSONModel([]);
+        this.setModel(model,"form");
+    }
 
 
     public onInit () : void | undefined {
@@ -17,15 +26,52 @@ export default class Details extends BaseController {
     }
 
     private _bindElement (event : Route$PatternMatchedEvent) : void {
+
+        //reset
+        this.removeAllContent();
+
+        //Form - Model
+        this.formModel();
+
         const args = event.getParameter("arguments") as any;
-        const index = args.index;
+        const iEmployeeID = args.ID;
         const view = this.getView() as View;
         
 
         view.bindElement({
-            path: '/Employees/'+index,
-            model: 'employees'
+            path: `/Employees(${iEmployeeID})`,
+            model: 'northwind'
         });
     }
 
+    public onClosePress () : void {
+        const router = this.getRouter();
+        const view = this.getModel("view") as JSONModel;
+        view.setProperty("/myLayout","OneColumn");
+        router.navTo("RouteMaster");
+    }
+
+    private removeAllContent () : void {
+        const panel = this.byId("tableIncidence") as Panel;
+        panel.removeAllContent();
+    }
+
+    public async onCreatePress () : Promise<void> {
+        const panel = this.byId("tableIncidence") as Panel;
+
+        const formModel = this.getModel("form") as JSONModel;
+        const aData = formModel.getData() as object[];
+        const index = aData.length; //0
+        aData.push({myIndex: index + 1}); // 1
+        formModel.refresh();
+
+        this.panel = await this.loadFragment({name: "employees.fragment.NewIncidence"}) as Panel;
+
+        this.panel.bindElement({
+            path: 'form>/'+index,
+            model: 'form'
+        });
+
+        panel.addContent(this.panel);
+    }
 }
