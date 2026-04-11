@@ -12,6 +12,15 @@
                         ${form>Type} === '2'? 'decline' : ''
                     }"/>
                     <Title text="{i18n>incidence} ({form>myIndex})"/>
+                    <ToolbarSpacer/>
+                    <Button
+                        icon="sap-icon://save"
+                        type="Emphasized"
+                        press="onSavePress"/>
+                    <Button
+                        icon="sap-icon://delete"
+                        type="Reject"
+                        press="onDeletePress"/>
                 </Toolbar>
             </headerToolbar>
 
@@ -21,7 +30,7 @@
                     <VBox class="sapUiSmallMarginEnd">
 
                         <Text text="{i18n>date}: "/>
-                        <DatePicker value="{form>CreationDate}"/>
+                        <DatePicker dateValue="{form>CreationDate}"/>
                     
                     </VBox>
                 

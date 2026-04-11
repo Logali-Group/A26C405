@@ -3,6 +3,9 @@ import BaseController from "./BaseController";
 import View from "sap/ui/core/mvc/View";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Panel from "sap/m/Panel";
+import Button, { Button$PressEvent } from "sap/m/Button";
+import Context from "sap/ui/model/Context";
+import Utils from "employees/utils/Utils";
 
 /**
  * @namespace employees.controller
@@ -73,5 +76,40 @@ export default class Details extends BaseController {
         });
 
         panel.addContent(this.panel);
+    }
+
+    public onSavePress (oEvent : Button$PressEvent) : void {
+
+        const button = oEvent.getSource() as Button;
+        const context = button.getBindingContext("form") as Context;
+        const contextEmployee = button.getBindingContext("northwind") as Context;
+        const utils = new Utils(this);
+
+        const object = {
+            path: "/IncidentsSet",
+            body: {
+                SapId: utils.getEmail(),
+                EmployeeId: (contextEmployee.getProperty("EmployeeID") as number).toString(),
+                CreationDate: context.getProperty("CreationDate"),
+                Type: context.getProperty("Type"),
+                Reason: context.getProperty("Reason")
+            }
+        };
+        console.log(object);
+        utils.crud("Create", new JSONModel(object));
+    }
+
+    public onDeletePress () : void {
+
+        const utils = new Utils(this);
+
+        const object = {
+            path : '/IncidentsSet',
+            filters:[
+
+            ]
+        };
+        
+        utils.read(new JSONModel(object));
     }
 }
