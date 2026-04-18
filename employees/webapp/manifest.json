@@ -80,7 +80,10 @@
       "zincidence": {
         "dataSource": "YSAPUI5_SRV_01",
         "preload": true,
-        "settings": {}
+        "settings": {
+          "useBatch":false,
+          "defaultUpdateMethod":"PUT"
+        }
       }
     },
     "resources": {

@@ -29,59 +29,102 @@ export default class Utils {
     }
 
 
-    public crud (action: string, object? : JSONModel | undefined) : void {
-        MessageBox.confirm(this.resourceBundle.getText("question") || '', {
-            actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-            emphasizedAction: MessageBox.Action.OK,
-            onClose: (sAction : string | null) => {
-                if (sAction === MessageBox.Action.OK) {
-                    switch (action) { // Create,Update,Delete
-                        case 'Create': this._create(object); break;
-                        case 'Update': this._update(); break;
-                        case 'Delete': this._delete(); break;
+    public async crud (action: string, object? : JSONModel | undefined) : Promise<void> {
+
+        return new Promise((resolve,reject)=> {
+
+            MessageBox.confirm(this.resourceBundle.getText("question") || '', {
+                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                emphasizedAction: MessageBox.Action.OK,
+                onClose: async (sAction : string | null) => {
+                    if (sAction === MessageBox.Action.OK) {
+                        switch (action) { // Create,Update,Delete
+                            case 'Create': await this._create(object); break;
+                            case 'Update': await this._update(object); break;
+                            case 'Delete': await this._delete(object); break;
+                        }
                     }
                 }
-            }
+            });
+
         });
     }
 
 
-    public read (object : JSONModel | undefined) : void {
+    public async read (object : JSONModel | undefined) : Promise<void | ODataListBinding> {
         const sPath = object?.getProperty("/path");
         const aFilters = object?.getProperty("/filters");
+        const oModel = this.model;
 
-        this.model.read(sPath, {
-            filters: aFilters,
-            success: (oResults : ODataListBinding) => {
-                console.log(oResults);
-            },
-            error: () => {
-                MessageBox.error(this.resourceBundle.getText("error") || '');
-            }
+        return new Promise((resolve, reject) => {
+            oModel.read(sPath, {
+                filters: aFilters,
+                success: (oResults : ODataListBinding) => {
+                    resolve(oResults);
+                },
+                error: () => {
+                    MessageBox.error(this.resourceBundle.getText("error") || '');
+                    reject();
+                }
+            });
         });
     }
 
 
-    private _create (object : JSONModel | undefined) : void {
+    private async _create (object : JSONModel | undefined) : Promise<void> {
         const sPath = object?.getProperty("/path");
         const oBody = object?.getProperty("/body");
         
-        this.model.create(sPath, oBody, {
-            success: () => {
-                MessageBox.success(this.resourceBundle.getText("success") || '');
-            },
-            error: () => {
-                MessageBox.error(this.resourceBundle.getText("error") || '')
-            }
-        });
+        return new Promise((resolve,reject)=>{
+            this.model.create(sPath, oBody, {
+                success: () => {
+                    MessageBox.success(this.resourceBundle.getText("success") || '');
+                    resolve();
+                },
+                error: () => {
+                    MessageBox.error(this.resourceBundle.getText("error") || '');
+                    reject();
+                }
+            });
+        })
+
     }
 
-    private _update () : void {
-        console.log("Update");
+    private async _update (object : JSONModel | undefined) : Promise<void> {
+        const oModel = this.model;
+        const sPath = object?.getProperty("/path");
+        const oBody = object?.getProperty("/body");
+
+        return new Promise((resolve,reject) => {
+            oModel.update(sPath, oBody, {
+                success: () =>{
+                    MessageBox.success(this.resourceBundle.getText("success") || '');
+                    resolve();
+                },
+                error : () =>{
+                    MessageBox.error(this.resourceBundle.getText("error") || '');
+                    reject();
+                }
+            });
+        })
     }
 
-    private _delete () : void {
-        console.log("Delete");
+    private async _delete (object : JSONModel | undefined) : Promise<void> {
+        const oModel = this.model;
+        const sPath = object?.getProperty("/path");
+
+        return new Promise((resolve,reject) => {
+            oModel.remove(sPath, {
+                success: () =>{
+                    MessageBox.success(this.resourceBundle.getText("success") || '');
+                    resolve();
+                },
+                error : () =>{
+                    MessageBox.error(this.resourceBundle.getText("error") || '');
+                    reject();
+                }
+            });
+        }); 
     }
 
 }
