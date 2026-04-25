@@ -1,0 +1,129 @@
+<mvc:View
+            controllerName="employees.controller.OrderDetails"
+            xmlns="sap.m"
+            xmlns:uxap="sap.uxap"
+            xmlns:mvc="sap.ui.core.mvc"
+            xmlns:signature="employees.control">
+
+    <uxap:ObjectPageLayout>
+    
+        <uxap:headerTitle>
+
+            <uxap:ObjectPageDynamicHeaderTitle>
+
+                <!-- Título -->
+                <uxap:expandedHeading>
+                    <Title text="{i18n>customerID}: {northwind>CustomerID}"/>
+                </uxap:expandedHeading>  
+
+                <!-- Descripción -->
+                <uxap:expandedContent>
+                    <Text text="{i18n>orderID}: {northwind>OrderID}"/>
+                </uxap:expandedContent>
+
+            </uxap:ObjectPageDynamicHeaderTitle>
+
+        </uxap:headerTitle>
+
+
+        <uxap:headerContent>
+
+            <FlexBox justifyContent="SpaceBetween">
+
+                <HBox>
+                    <VBox>
+                        <Label text="{i18n>orderDate}:" class="boldElement"/>
+                        <Text text="{
+                            path: 'northwind>OrderDate',
+                            type: 'sap.ui.model.type.Date'
+                        }"/>
+                    </VBox>
+                </HBox>
+
+                <HBox>
+                    <VBox>
+                        <Label text="{i18n>shipName}:" class="boldElement"/>
+                        <Text text="{northwind>ShipName}"/>
+                    </VBox>
+                </HBox>
+
+                <HBox>
+                    <VBox>
+                        <Label text="{i18n>shipAddress}:" class="boldElement"/>
+                        <Text text="{northwind>ShipAddress}"/>
+                    </VBox>
+                </HBox>
+
+            </FlexBox>
+
+        </uxap:headerContent>
+
+
+        <uxap:sections>
+
+            <uxap:ObjectPageSection>
+
+                <uxap:subSections>
+
+                    <uxap:ObjectPageSubSection>
+
+                        <uxap:blocks>
+
+                            <FlexBox width="100%"
+                                    alignItems="Center"
+                                    justifyContent="Center"
+                                    direction="Column">
+
+                                <FlexBox width="300px"
+                                        height="150px">
+                                    <signature:Signature id="signature"/>
+                                </FlexBox>
+                            
+                                <HBox class="sapUiTinyMarginTop"
+                                        justifyContent="End"
+                                        width="302px">
+
+                                    <Button
+                                            class="sapUiSmallMarginEnd"
+                                            text="{i18n>save}"
+                                            tooltip="{i18n>save}"
+                                            type="Accept"
+                                            press="onSavePress"
+                                            width="4rem"/>
+
+                                    <Button
+                                            class="sapUiSmallMarginEnd"
+                                            text="{i18n>clear}"
+                                            tooltip="{i18n>clear}"
+                                            type="Reject"
+                                            press="onClearPress"
+                                            width="4rem"/>
+
+                                    <Button
+                                            class="sapUiSmallMarginEnd"
+                                            text="{i18n>refresh}"
+                                            tooltip="{i18n>refresh}"
+                                            type="Emphasized"
+                                            press="onRefreshPress"
+                                            width="4rem"/>
+                                
+                                
+                                </HBox>
+                            
+                            </FlexBox>
+                        
+                        </uxap:blocks>
+                    
+                    
+                    </uxap:ObjectPageSubSection>
+                
+                </uxap:subSections>
+            
+            </uxap:ObjectPageSection>
+        
+        </uxap:sections>
+    
+    
+    </uxap:ObjectPageLayout>
+
+</mvc:View>

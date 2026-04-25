@@ -24,7 +24,9 @@
 
             <items>
 
-                <ColumnListItem>
+                <ColumnListItem
+                        type="Navigation"
+                        press="onNavToOrderDetails">
 
                     <cells>
 

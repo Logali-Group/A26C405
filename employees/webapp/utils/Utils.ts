@@ -29,7 +29,7 @@ export default class Utils {
     }
 
 
-    public async crud (action: string, object? : JSONModel | undefined) : Promise<void> {
+    public async crud (action: string, object? : JSONModel | undefined) : Promise<void | ODataListBinding> {
 
         return new Promise((resolve,reject)=> {
 
@@ -39,9 +39,9 @@ export default class Utils {
                 onClose: async (sAction : string | null) => {
                     if (sAction === MessageBox.Action.OK) {
                         switch (action) { // Create,Update,Delete
-                            case 'Create': await this._create(object); break;
-                            case 'Update': await this._update(object); break;
-                            case 'Delete': await this._delete(object); break;
+                            case 'Create': resolve(await this._create(object)); break;
+                            case 'Update': resolve(await this._update(object)); break;
+                            case 'Delete': resolve(await this._delete(object)); break;
                         }
                     }
                 }
@@ -52,7 +52,7 @@ export default class Utils {
 
 
     public async read (object : JSONModel | undefined) : Promise<void | ODataListBinding> {
-        const sPath = object?.getProperty("/path");
+        const sPath = object?.getProperty("/path").split("(")[0];
         const aFilters = object?.getProperty("/filters");
         const oModel = this.model;
 
@@ -71,15 +71,17 @@ export default class Utils {
     }
 
 
-    private async _create (object : JSONModel | undefined) : Promise<void> {
+    private async _create (object : JSONModel | undefined) : Promise<void | ODataListBinding> {
         const sPath = object?.getProperty("/path");
         const oBody = object?.getProperty("/body");
         
         return new Promise((resolve,reject)=>{
             this.model.create(sPath, oBody, {
-                success: () => {
+                success: async () => {
                     MessageBox.success(this.resourceBundle.getText("success") || '');
-                    resolve();
+                    resolve(
+                        await this.read(object)
+                    );
                 },
                 error: () => {
                     MessageBox.error(this.resourceBundle.getText("error") || '');
@@ -90,16 +92,18 @@ export default class Utils {
 
     }
 
-    private async _update (object : JSONModel | undefined) : Promise<void> {
+    private async _update (object : JSONModel | undefined) : Promise<void | ODataListBinding> {
         const oModel = this.model;
         const sPath = object?.getProperty("/path");
         const oBody = object?.getProperty("/body");
 
         return new Promise((resolve,reject) => {
             oModel.update(sPath, oBody, {
-                success: () =>{
+                success: async () =>{
                     MessageBox.success(this.resourceBundle.getText("success") || '');
-                    resolve();
+                    resolve(
+                        await this.read(object)
+                    );
                 },
                 error : () =>{
                     MessageBox.error(this.resourceBundle.getText("error") || '');
@@ -109,15 +113,17 @@ export default class Utils {
         })
     }
 
-    private async _delete (object : JSONModel | undefined) : Promise<void> {
+    private async _delete (object : JSONModel | undefined) : Promise<void | ODataListBinding> {
         const oModel = this.model;
         const sPath = object?.getProperty("/path");
 
         return new Promise((resolve,reject) => {
             oModel.remove(sPath, {
-                success: () =>{
+                success: async () =>{
                     MessageBox.success(this.resourceBundle.getText("success") || '');
-                    resolve();
+                    resolve(
+                        await this.read(object)
+                    );
                 },
                 error : () =>{
                     MessageBox.error(this.resourceBundle.getText("error") || '');

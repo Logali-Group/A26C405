@@ -12,6 +12,8 @@ import ODataListBinding from "sap/ui/model/odata/v2/ODataListBinding";
 import DatePicker, { DatePicker$ChangeEvent } from "sap/m/DatePicker";
 import Input, { Input$LiveChangeEvent } from "sap/m/Input";
 import Select, { Select$ChangeEvent } from "sap/m/Select";
+import Event from "sap/ui/base/Event";
+import ObjectListItem from "sap/m/ObjectListItem";
 
 /**
  * @namespace employees.controller
@@ -145,9 +147,14 @@ export default class Details extends BaseController {
                     CreationDate: context.getProperty("CreationDate"),
                     Type: context.getProperty("Type"),
                     Reason: context.getProperty("Reason")
-                }
+                },
+                filters: [
+                    new Filter("SapId","EQ", sEmail),
+                    new Filter("EmployeeId","EQ", sEmployeeId)
+                ]
             };
-            await utils.crud("Create", new JSONModel(object));
+            const oResult = await utils.crud("Create", new JSONModel(object));
+            this.showIncidents(oResult);
         } else {
             const sIncidenceId = context.getProperty("IncidenceId") as string;
             const object = {
@@ -159,10 +166,15 @@ export default class Details extends BaseController {
                     TypeX: context.getProperty("TypeX"),
                     Reason: context.getProperty("Reason"),
                     ReasonX: context.getProperty("ReasonX")
-                }
+                },
+                filters: [
+                    new Filter("SapId","EQ", sEmail),
+                    new Filter("EmployeeId","EQ", sEmployeeId)
+                ]
             };
             console.log(object);
-            await utils.crud("Update", new JSONModel(object));
+            const oResult = await utils.crud("Update", new JSONModel(object));
+            this.showIncidents(oResult);
         }
 
     }
@@ -177,10 +189,15 @@ export default class Details extends BaseController {
         const sEmployeeId = (northwind.getProperty("EmployeeID") as number).toString();
 
         const object = {
-            path : `/IncidentsSet(IncidenceId='${sIncidenceId}',SapId='${sEmail}',EmployeeId='${sEmployeeId}')`
+            path : `/IncidentsSet(IncidenceId='${sIncidenceId}',SapId='${sEmail}',EmployeeId='${sEmployeeId}')`,
+            filters: [
+                new Filter("SapId","EQ", sEmail),
+                new Filter("EmployeeId","EQ", sEmployeeId)
+            ]
         };
 
-        await utils.crud('Delete', new JSONModel(object));
+        const oResult = await utils.crud('Delete', new JSONModel(object));
+        this.showIncidents(oResult);
     }  
 
     public updateIncidenceCreationDate (event : DatePicker$ChangeEvent) : void {
@@ -199,5 +216,23 @@ export default class Details extends BaseController {
         const context = (event.getSource() as Select).getBindingContext("form") as Context;
         let oObject = context.getObject() as any;
         oObject.TypeX = true;
+    }
+
+    public onNavToOrderDetails (event : Event) : void {
+        const item = event.getSource() as ObjectListItem;
+        const context = item.getBindingContext("northwind") as Context;
+        const sEmployeeId = context.getProperty("EmployeeID");
+        const sOrderId = context.getProperty("OrderID");
+        const sPath = context.getPath() as string;
+        console.log(sPath);
+
+        const oView = this.getModel("view") as JSONModel;
+        oView.setProperty("/myLayout","EndColumnFullScreen");
+
+        const router = this.getRouter();
+        router.navTo("RouteOrderDetails",{
+            EmployeeId: sEmployeeId,
+            OrderId: sOrderId
+        });
     }
 }

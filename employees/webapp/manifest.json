@@ -119,6 +119,15 @@
             "TargetMaster",
             "TargetDetails"
           ]
+        },
+        {
+          "name":"RouteOrderDetails",
+          "pattern": "Employee({EmployeeId})/Order({OrderId}):?query:",
+          "target":[
+            "TargetMaster",
+            "TargetDetails",
+            "TargerOrderDetails"
+          ]
         }
       ],
       "targets": {
@@ -136,6 +145,12 @@
           "controlId": "fcl-container",
           "controlAggregation": "midColumnPages",
           "name": "Details"
+        },
+        "TargerOrderDetails": {
+          "parent": "TargetContainer",
+          "controlId": "fcl-container",
+          "controlAggregation": "endColumnPages",
+          "name": "OrderDetails"
         }
       }
     },
