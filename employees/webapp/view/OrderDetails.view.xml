@@ -3,6 +3,7 @@
             xmlns="sap.m"
             xmlns:uxap="sap.uxap"
             xmlns:mvc="sap.ui.core.mvc"
+            xmlns:upload="sap.m.upload"
             xmlns:signature="employees.control">
 
     <uxap:ObjectPageLayout>
@@ -119,6 +120,23 @@
                 
                 </uxap:subSections>
             
+            </uxap:ObjectPageSection>
+
+            <uxap:ObjectPageSection>
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection title="{i18n>attachment}">
+                        <uxap:blocks>
+                            <upload:UploadSet id="upload"
+                                            uploadUrl="/sap/opu/odata/sap/YSAPUI5_SRV_01/FilesSet"
+                                            beforeUploadStarts="onBeforeUploadEvent"
+                                            uploadCompleted="onUploadCompletedEvent"
+                                            afterItemRemoved="onAfterItemRemovedEvent">
+                                <!-- <upload:UploadSetItem
+                                                    fileName="{zincidence>FileName}"/> -->
+                            </upload:UploadSet>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
             </uxap:ObjectPageSection>
         
         </uxap:sections>

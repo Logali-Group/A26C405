@@ -16,6 +16,7 @@ export default class Signature extends Control {
     constructor(id?: string, settings?: $SignatureSettings) { super(id, settings); }
 
     private _signaturePad : SignaturePad;
+    private flag : boolean = false;
 
     static readonly metadata : MetadataOptions = {
         properties: {
@@ -45,6 +46,11 @@ export default class Signature extends Control {
         try {
 
             this._signaturePad = new SignaturePad(canvas);
+            let $this = this;
+
+            canvas.addEventListener("pointerdown", function () {
+                $this.flag = true;
+            });
 
         } catch (error) {
             console.log(error);
@@ -53,8 +59,20 @@ export default class Signature extends Control {
 
     public myClear () : void {
         this._signaturePad.clear();
+        this.flag = false;
     }
 
+    public isFill () : boolean {
+        return this.flag;
+    }
+
+    public getSignature () : string {
+        return this._signaturePad.toDataURL();
+    }
+
+    public setSignature (sSignature : string) : void {
+        this._signaturePad.fromDataURL(sSignature, { width: 300, height: 150});
+    }
 
     renderer = {
         apiVersion: 4,
