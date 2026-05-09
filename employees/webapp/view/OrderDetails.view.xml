@@ -127,7 +127,7 @@
                     <uxap:ObjectPageSubSection title="{i18n>attachment}">
                         <uxap:blocks>
                             <upload:UploadSet id="upload"
-                                            uploadUrl="/sap/opu/odata/sap/YSAPUI5_SRV_01/FilesSet"
+                                            uploadUrl="/employees/sap/opu/odata/sap/YSAPUI5_SRV_01/FilesSet"
                                             beforeUploadStarts="onBeforeUploadEvent"
                                             uploadCompleted="onUploadCompletedEvent"
                                             afterItemRemoved="onAfterItemRemovedEvent">

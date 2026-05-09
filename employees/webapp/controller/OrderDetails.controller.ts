@@ -190,7 +190,7 @@ export default class OrderDetails extends BaseController {
         const item = event.getSource() as UploadSetItem;
         const context = item.getBindingContext("zincidence") as Context;
         const sPath = context.getPath();
-        const sUrl = "/sap/opu/odata/sap/YSAPUI5_SRV_01"+sPath+"/$value";
+        const sUrl = "/employees/sap/opu/odata/sap/YSAPUI5_SRV_01"+sPath+"/$value";
         item.setUrl(sUrl);
     }
 
